@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import ShowAllVeggies from './ShowAllVeggies';
+import CreateNewVeggie from './CreateNewVeggie';
+import ShowSingleVeggie from './ShowSingleVeggie';
 import './App.css'
 import axios from 'axios';
 
@@ -52,7 +56,36 @@ function App() {
     return <div key={fruit._id} className={fruit.canEat ? "green" : "red"} >{fruit.name}</div>
   });
 
+  
   return (
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Show All Veggies</Link>
+            </li>
+            <li>
+              <Link to="/create">Create New Veggie</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Switch>
+          <Route exact path="/">
+            <ShowAllVeggies />
+          </Route>
+          <Route path="/create">
+            <CreateNewVeggie />
+          </Route>
+          <Route path="/veggie/:veggieName">
+            <ShowSingleVeggie />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+};
     <>
       <form id="create-fruit-form" onSubmit={handleSubmit}>
         <div className='input-container'>
@@ -75,7 +108,6 @@ function App() {
       </section>
 
     </>
-  )
-}
+
 
 export default App
